@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { FavoritesContextProvider } from "./context/FavoritesContextProvider";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import FilteredRecipes from "./pages/FilteredRecipes";
+import SingleRecipe from "./pages/SingleRecipe";
+import FavRecipes from "./pages/FavRecipes";
+import Error from "./pages/Error";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <FavoritesContextProvider>
+          <Navbar />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/search/:query" element={<FilteredRecipes />} />
+            <Route path="/search/recipe/:id" element={<SingleRecipe />} />
+            <Route path="/favRecipes" element={<FavRecipes />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </FavoritesContextProvider>
+      </Router>
     </div>
   );
 }
