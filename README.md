@@ -2,7 +2,7 @@
 
 This is the final project for Start2Impact's React course.
 
-This app allows you to choose a recipe in the suggested list or enter an ingredient in the search engine and get a bunch of tasty results. After your search you can choose to filter only the vegan ones. If you find a recipe that you like you can save it in your favorites, so when your friends and family shows up for dinner without notice you'll know what to cook!
+This app allows you to choose a recipe in the suggested list or enter an ingredient in the search engine and get a bunch of tasty results. After your search you can choose to filter only the vegan ones. If you find a recipe that you like you can save it in your favorites, so when your friends and family show up for dinner without notice you'll know what to cook!
 
 ## Built with:
 
