@@ -40,7 +40,8 @@ export function FavoritesContextProvider(props) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("Favorite Recipes", JSON.stringify(userFavorites));
+    if (userFavorites.length)
+      localStorage.setItem("Favorite Recipes", JSON.stringify(userFavorites));
   }, [userFavorites]);
   return (
     <FavoritesContext.Provider value={context}>

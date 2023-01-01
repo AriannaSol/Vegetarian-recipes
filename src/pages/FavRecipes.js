@@ -6,13 +6,32 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function FavRecipes() {
   const favContext = useContext(FavoritesContext);
   const [loading, setLoading] = useState(false);
+  const [allRecipes, setAllRecipes] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
+    console.log(favContext.totalFavorites, favContext.favorites);
+    setLoading(false); //true
+    const getFav = async () => {
+      const apiUrl = `https://api.spoonacular.com/recipes/`;
+      const ids = JSON.parse(localStorage.getItem("Favorite Recipes"));
+      console.log("ids", ids);
+      const request = ids.map(async (recipe) => {
+        const response = await fetch(
+          `${apiUrl}${recipe.id}/information?apiKey=${process.env.REACT_APP_API_KEY}`
+        );
+        return response.json();
+      });
+      const results = await Promise.all(request);
+      console.log("results", results);
+      /* favContext.favorites = results; */
+      setAllRecipes(results);
       setLoading(false);
-    }, 500);
-  }, []);
+      console.log("favCxt", favContext.favorites);
+    };
+    if (favContext.totalFavorites >= 1) {
+      getFav();
+    }
+  }, [favContext]);
 
   if (loading) {
     return (
@@ -32,7 +51,7 @@ export default function FavRecipes() {
     <section className="section">
       <h2 className="section-title">My Favorite Recipes</h2>
       <div className="recipes-center">
-        {favContext.favorites.map((item) => {
+        {allRecipes.map((item) => {
           return (
             <div key={item.id} className="recipe">
               <div className="card-title-container">

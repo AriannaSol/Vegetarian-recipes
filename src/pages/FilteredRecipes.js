@@ -1,59 +1,59 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import SearchForm from "../components/SearchForm";
+import { getVegetarianResults } from "../services/clientApi";
+import { getVeganResults } from "../services/clientApi";
 
 function FilteredRecipes() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [vegan, setVegan] = useState(false);
+  const [totalResults, setTotalResults] = useState();
+
+  const [recipesPerPage] = useState(20);
+
+  const [page, setPage] = useState(1);
+
+  const offset = page * recipesPerPage - recipesPerPage;
+  const showedRecipes = page * recipesPerPage;
 
   const { query } = useParams();
 
   const navigate = useNavigate(-1);
 
   useEffect(() => {
-    const getSearchResults = async () => {
-      setLoading(true);
-      setSearchResults([]);
-      try {
-        const resp = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&number=50&query=${query}&diet=vegetarian`
-        );
-        if (resp) {
-          const recipes = resp.data.results;
-          setSearchResults(recipes);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-
-    getSearchResults(query);
-  }, [query]);
-
-  const showVegan = async () => {
-    setLoading(true);
-    setSearchResults([]);
-    try {
-      const resp = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&number=50&query=${query}&diet=vegan`
+    getVegetarianResults(
+      recipesPerPage,
+      offset,
+      query,
+      setLoading,
+      setSearchResults,
+      setTotalResults
+    );
+  }, []);
+  useEffect(() => {
+    if (vegan) {
+      getVeganResults(
+        recipesPerPage,
+        offset,
+        query,
+        setLoading,
+        setSearchResults,
+        setTotalResults
       );
-      if (resp) {
-        const recipes = resp.data.results;
-        setSearchResults(recipes);
-        setLoading(false);
-        setVegan(true);
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
+    } else {
+      getVegetarianResults(
+        recipesPerPage,
+        offset,
+        query,
+        setLoading,
+        setSearchResults,
+        setTotalResults
+      );
     }
-  };
+  }, [page, vegan]);
 
   if (loading) {
     return (
@@ -81,7 +81,7 @@ function FilteredRecipes() {
       {vegan === false && (
         <div className="vegan-container">
           <p>Are you vegan? Click here!</p>
-          <button onClick={showVegan}>Show Vegan</button>
+          <button onClick={() => setVegan(true)}>Show Vegan</button>
         </div>
       )}
       <section className="section">
@@ -110,8 +110,20 @@ function FilteredRecipes() {
           })}
         </div>
       </section>
+      <div className="change-page-container">
+        {page !== 1 && (
+          <button onClick={() => setPage((p) => p - 1)}>Previous page</button>
+        )}
+
+        {page}
+        {showedRecipes < totalResults && (
+          <button onClick={() => setPage((p) => p + 1)}>Next page</button>
+        )}
+      </div>
     </main>
   );
 }
 
 export default FilteredRecipes;
+
+/*controlla se fare "show vegan" quando si è sulla pag 2 dei risultati da problemi */

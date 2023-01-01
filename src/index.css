@@ -12,6 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button:active{
+  box-shadow: 10px 10px 10px rgb(156 146 146);
+}
 /*Navbar*/
 .navbar {
   background: #e1e1e1;
@@ -35,6 +39,9 @@ code {
   text-decoration: none;
   color: #172d4e;
 }
+.nav-home:active{
+  font-size: 26px;
+}
 .nav-links {
   display: flex;
   align-items: center;
@@ -50,6 +57,11 @@ code {
   padding: 0.25rem 0.5rem;
   text-decoration: none;
   color: #172d4e;
+}
+.nav-pages:hover{
+  text-decoration: underline;
+  color: #2370e4;
+  transition: text-decoration 1.2s, color 1.2s;
 }
 .nav-pages::first-letter {
   text-transform: capitalize;
@@ -111,6 +123,11 @@ code {
   border-radius: 0.3rem;
   cursor: pointer;
 }
+.search-button:hover{
+  background-color: #172d4e;
+  color: #a3a3a3;
+  transition: background-color 1.2s, color 1.2s;
+}
 .vegan-container{
   display: flex;
   justify-content: center;
@@ -131,6 +148,32 @@ code {
   margin-left: 10px;
   font-size: 20px;
   cursor: pointer;
+}
+.vegan-container button:hover{
+  color: #a3a3a3;
+  transition: color 1.2s;
+}
+.change-page-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.change-page-container button{
+  font-size: 1rem;
+  padding: 0.8rem;
+  color: #172d4e;
+  border: 0.5px solid gray;
+  font-weight: 600;
+  text-transform: capitalize;
+  border-radius: 10px;
+  background-color: #bfbfbf;
+  cursor: pointer;
+  margin: 10px;
+}
+.change-page-container button:hover{
+  background-color: #172d4e;
+  color: #a3a3a3;
+  transition: background-color 1.2s, color 1.2s;
 }
 /*RecipesList*/
 .section-title {
@@ -225,6 +268,11 @@ code {
   background-color: #bfbfbf;
   cursor: pointer;
 }
+.recipe-button:hover{
+  background-color: #172d4e;
+  color: #a3a3a3;
+  transition: background-color 1.2s, color 1.2s;
+}
 .recipe-button a{
   text-decoration: none;
   color: #172d4e;
@@ -300,6 +348,11 @@ code {
   background-color: #bfbfbf;
   cursor: pointer;
 }
+.show-button:hover{
+  background-color: #172d4e;
+  color: #a3a3a3;
+  transition: background-color 1.2s, color 1.2s;
+}
 .title-button-container{
   width: 100%;
   display: flex;
@@ -347,7 +400,11 @@ code {
   padding: 0.8rem;
   border-radius: 0.3rem;
   cursor: pointer;
-
+}
+.error-button:hover{
+  background-color: #172d4e;
+  color: #a3a3a3;
+  transition: background-color 1.2s, color 1.2s;
 }
 .error-button a{
   text-decoration: none;

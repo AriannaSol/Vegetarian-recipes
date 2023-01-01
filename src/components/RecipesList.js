@@ -1,30 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import axios from "axios";
+import { getHomeRecipes } from "../services/clientApi";
 
 function RecipesList() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getSearchResults = async () => {
-      setLoading(true);
-      try {
-        const resp = await axios.get(
-          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&diet=vegetarian&number=500`
-        );
-        if (resp) {
-          const recipes = resp.data.results;
-          setSearchResults(recipes);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error(err);
-        setLoading(false);
-      }
-    };
-    getSearchResults();
+    getHomeRecipes(setLoading, setSearchResults);
   }, []);
   if (loading) {
     return (

@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { FavoritesContext } from "../context/FavoritesContextProvider";
-import axios from "axios";
+import { getSingleRecipe } from "../services/clientApi";
 
 function SingleRecipe() {
   const { id } = useParams();
@@ -24,32 +24,13 @@ function SingleRecipe() {
     } else {
       favContext.addFavorite({
         id: recipe.id,
-        title: recipe.title,
-        image: recipe.image,
       });
     }
   }
 
   useEffect(() => {
     setLoading(true);
-
-    const getRecipe = async () => {
-      try {
-        const resp = await axios.get(
-          `https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`
-        );
-
-        if (resp.data) {
-          setLoading(false);
-          setRecipe(resp.data);
-        }
-      } catch (err) {
-        console.error(err);
-        setLoading(false);
-      }
-    };
-
-    getRecipe();
+    getSingleRecipe(id, setLoading, setRecipe);
   }, [id]);
 
   if (loading) {
