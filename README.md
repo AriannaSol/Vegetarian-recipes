@@ -38,7 +38,7 @@ To start the application you need to have Node.js installed on your computer, so
   npm install 
   ```
   ```sh
-  npm run dev
+  npm start
   ```
 
  ## Try it
