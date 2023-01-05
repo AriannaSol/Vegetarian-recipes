@@ -503,6 +503,9 @@ button:active{
     font-size: 1.2rem;
     text-decoration: none;
   }
+  .burger-nav-pages:hover{
+    text-decoration: underline;
+  }
 
   .burger-container-dark, .burger-container-light{
     width: 2rem;

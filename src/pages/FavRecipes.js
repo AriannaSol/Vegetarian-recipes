@@ -9,12 +9,10 @@ export default function FavRecipes() {
   const [allRecipes, setAllRecipes] = useState([]);
 
   useEffect(() => {
-    console.log(favContext.totalFavorites, favContext.favorites);
-    setLoading(false); //true
+    setLoading(true);
     const getFav = async () => {
       const apiUrl = `https://api.spoonacular.com/recipes/`;
       const ids = JSON.parse(localStorage.getItem("Favorite Recipes"));
-      console.log("ids", ids);
       const request = ids.map(async (recipe) => {
         const response = await fetch(
           `${apiUrl}${recipe.id}/information?apiKey=${process.env.REACT_APP_API_KEY}`
@@ -22,14 +20,14 @@ export default function FavRecipes() {
         return response.json();
       });
       const results = await Promise.all(request);
-      console.log("results", results);
-      /* favContext.favorites = results; */
       setAllRecipes(results);
       setLoading(false);
-      console.log("favCxt", favContext.favorites);
     };
     if (favContext.totalFavorites >= 1) {
       getFav();
+    }
+    if (favContext.totalFavorites === 0) {
+      setLoading(false);
     }
   }, [favContext]);
 

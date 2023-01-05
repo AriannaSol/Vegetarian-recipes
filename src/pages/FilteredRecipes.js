@@ -32,7 +32,7 @@ function FilteredRecipes() {
       setSearchResults,
       setTotalResults
     );
-  }, []);
+  }, [offset, query, recipesPerPage]);
   useEffect(() => {
     if (vegan) {
       getVeganResults(
@@ -53,7 +53,7 @@ function FilteredRecipes() {
         setTotalResults
       );
     }
-  }, [page, vegan]);
+  }, [offset, page, query, recipesPerPage, vegan]);
 
   if (loading) {
     return (
@@ -78,7 +78,7 @@ function FilteredRecipes() {
   return (
     <main>
       <SearchForm />
-      {vegan === false && (
+      {vegan === false && page === 1 && (
         <div className="vegan-container">
           <p>Are you vegan? Click here!</p>
           <button onClick={() => setVegan(true)}>Show Vegan</button>
@@ -125,5 +125,3 @@ function FilteredRecipes() {
 }
 
 export default FilteredRecipes;
-
-/*controlla se fare "show vegan" quando si è sulla pag 2 dei risultati da problemi */
